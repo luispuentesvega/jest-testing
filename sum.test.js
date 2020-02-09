@@ -1,3 +1,5 @@
+// https://jestjs.io/docs/en/using-matchers
+
 const sum = require('./sum');
 
 test('adds 1 + 2 equal 3', () => {
@@ -39,6 +41,8 @@ test('zero', () => {
     expect(z).toBeFalsy();
 });
 
+
+// Numbers
 test('two plus two', () => {
     const value = 2 + 2;
     expect(value).toBeGreaterThan(3);
@@ -47,4 +51,49 @@ test('two plus two', () => {
     expect(value).toBeLessThanOrEqual(4.5);
 });
 
+test('add floating point numbers', () => {
+    const value = 0.1 + 0.2;
+    expect(value).toBeCloseTo(0.3);
+});
 
+
+// Strings
+test('there is no I in team', () => {
+    expect('team').not.toMatch(/I/);
+});
+
+test('but there is a "stop" in Christoph', () => {
+    expect('Christoph').toMatch(/stop/);
+});
+
+
+// Arrays an iterables
+const shoppingList = [
+    'diapers',
+    'kleenex',
+    'trash bags',
+    'paper towels',
+    'beer',
+];
+
+const shopListSet = new Set(shoppingList);
+
+test('the shopping list has beer on it', () => {
+    expect(shoppingList).toContain('beer');
+    expect(new Set(shoppingList)).toContain('beer');
+});
+
+
+// Exceptions
+const compileAndroidCode = () => {
+    throw new Error('you are using the wrong JDK');
+};
+
+test('compiling android goes as expected', () => {
+    expect(compileAndroidCode).toThrow();
+    expect(compileAndroidCode).toThrow(Error);
+
+    // You can also use the exact error message or a regexp
+    expect(compileAndroidCode).toThrow('you are using the wrong JDK');
+    expect(compileAndroidCode).toThrow(/JDK/);
+});
